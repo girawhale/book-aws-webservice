@@ -1,6 +1,0 @@
-com/book/awswebservice/Application.java
- com.book.awswebservice.Application
-com/book/awswebservice/web/dto/HelloResponseDto.java
- com.book.awswebservice.web.dto.HelloResponseDto
-com/book/awswebservice/web/HelloController.java
- com.book.awswebservice.web.HelloController

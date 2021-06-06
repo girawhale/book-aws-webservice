@@ -1,4 +1,0 @@
-com/book/awswebservice/web/dto/HelloResponseDtoTest.java
- com.book.awswebservice.web.dto.HelloResponseDtoTest
-com/book/awswebservice/web/HelloControllerTest.java
- com.book.awswebservice.web.HelloControllerTest
