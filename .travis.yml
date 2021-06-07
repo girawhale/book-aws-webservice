@@ -11,6 +11,10 @@ cache: # gradle을 통해 의존성을 받게 되면 해당 위치에 캐싱. �
   directories:
     - '$HOME/.m2/repository'
     - '$HOME/.gradle'
+
+before_install:
+  - chmod +x gradlew
+
 script: "./gradlew clean build" # master 브랜치에 푸시되었을 때 수행하는 명령어
 
 # CI 실행 완료 시 메일 알람 (+ 슬랙알림도!)
