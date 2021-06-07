@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@EnableJpaAuditing // JPA Auditing 기능을 활성화
+//@EnableJpaAuditing // JPA Auditing 기능을 활성화. @SpringBootApplication때문에 Test코드에서도 스캔되는데, @Entity 클래스가 하나도 없어 오류가 발생.
 @SpringBootApplication // 스프링부트의 자동 설정, 스프링 Bean 자동 읽기와 생성을 자동으로 설정. 현재 위치부터 설정을 읽기 때문에 프로젝트 최상단에 위치해야 함
 public class Application { // 프로젝트의 메인 클래스!
     public static void main(String[] args) {

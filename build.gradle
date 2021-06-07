@@ -31,7 +31,13 @@ dependencies { // 의존성 선언
     // mustache
     implementation 'org.springframework.boot:spring-boot-starter-mustache'
 
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-client' // 소셜 기능 구현시 필요
+
+    implementation 'org.springframework.session:spring-session-jdbc' // session을 DB에 저장
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // Spring Security 테스트를 위한 도구
     testImplementation 'org.springframework.security:spring-security-test'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'

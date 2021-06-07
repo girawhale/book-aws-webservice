@@ -1,9 +1,13 @@
 package com.book.awswebservice.web;
 
+import com.book.awswebservice.config.auth.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -17,13 +21,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class) // Junit5.
 // Web(Srping MVC)에 집중할 수 있는 어노테이션.
 // 선언시 @Controller, @ControllerAdvice 등을 사용 가능. @Service, @Component, @Repository 등은 사용 불가
-@WebMvcTest(controllers = HelloController.class)
+@WebMvcTest(controllers = HelloController.class, // CustomOAuth2UserService를 스캔하지 않아 오류가 발생. why? @Controller, @ControllerAdvice만 읽고 나머지는 읽지 않음
+        excludeFilters = {
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class) // 스캔 대상에서 SecurityConfig를 제거
+        }
+)
 public class HelloControllerTest {
 
     @Autowired // 스프링이 관리하는 빈(Bean)을 주입
     private MockMvc mvc; // 웹 API 테스트시 사용. 스프링 MVC 테스트의 시작점. API 테스트가 가능해짐
 
     @Test
+    @WithMockUser(roles = "USER")
     public void return_hello() throws Exception {
         String hello = "hello";
 
@@ -34,6 +43,7 @@ public class HelloControllerTest {
     }
 
     @Test
+    @WithMockUser(roles = "USER")
     public void return_helloDto() throws Exception {
         String name = "hello";
         int amount = 1000;
