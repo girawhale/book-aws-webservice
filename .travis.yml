@@ -37,6 +37,7 @@ deploy: # S3로 파일 업로드 혹은 CodeDeploy로 배포 등 외부 서비�
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: spring-webservice-build # S3 버킷
+    key: aws-webservice.zip
     bundle_type: zip # 압축 확장자
     application: spring-aws-webservice
     deployment_group: spring-aws-webservice-group
