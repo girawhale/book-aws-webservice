@@ -25,7 +25,7 @@ before_deploy: # deploy 명령어 실행전에 수행. CodeDeploy는 JAR파일�
   - cp scripts/*.sh before-deploy/ # zip파일에 포함할 파일 저장
   - cp appspec.yml before-deploy
   - cp build/libs/*.jar before-deploy/
-  - cd befroe-deploy && zip -r before-deploy * # before-deploy로 이동 후 전체 압축
+  - cd before-deploy && zip -r before-deploy * # before-deploy로 이동 후 전체 압축
   - cd ../ && mkdir -p deploy # 상위 디렉토리로 이동 && deploy 디렉토리 생성
   - mv before-deploy/before-deploy.zip deploy/aws-webservice.zip # deploy로 zip파일 이동
 
