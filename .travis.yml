@@ -18,9 +18,17 @@ before_install:
 script: "./gradlew clean build" # master 브랜치에 푸시되었을 때 수행하는 명령어
 
 before_deploy: # deploy 명령어 실행전에 수행. CodeDeploy는 JAR파일을 인식하지 못해 JAR+기타설정파일을 압축
-  - zip -r aws-webservice * # 현재 위치의 모든 파일을 압축. 명령어의 마지막 위치는 본인의 프로젝트 명
-  - mkdir -p deploy # deploy 디렉토리를 Travis CI가 실행 중인 생성
-  - mv aws-webservice.zip deploy/aws-webservice.zip # 파일을 이동
+#  - zip -r aws-webservice * # 현재 위치의 모든 파일을 압축. 명령어의 마지막 위치는 본인의 프로젝트 명
+#  - mkdir -p deploy # deploy 디렉토리를 Travis CI가 실행 중인 생성
+#  - mv aws-webservice.zip deploy/aws-webservice.zip # 파일을 이동
+  - mkdir -p before-deploy # zip에 포함시킬 파일을 담을 디렉토리. S3에는 디렉토리 단위만 업로드할 수 있기 때문에 반드시 생성
+  - cp scripts/*.sh before-deploy/ # zip파일에 포함할 파일 저장
+  - cp appspec.yml before-deploy
+  - cp build/libs/*.jar before-deploy/
+  - cd befroe-deploy && zip -r before-deploy * # before-deploy로 이동 후 전체 압축
+  - cd ../ && mkdir -p deploy # 상위 디렉토리로 이동 && deploy 디렉토리 생성
+  - mv before-deploy/before-deploy.zip deploy/aws-webservice.zip # deploy로 zip파일 이동
+
 
 deploy: # S3로 파일 업로드 혹은 CodeDeploy로 배포 등 외부 서비스와 연동될 행위를 선언
   - provider: s3
