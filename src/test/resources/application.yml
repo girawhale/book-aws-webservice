@@ -4,8 +4,8 @@ spring:
   h2:
     console:
       enabled: true
-  profiles:
-    include: oauth
+#  profiles:
+#    include: oauth
   session:
     store-type: jdbc # SPRING_SESSION, SPRING_SESSION_ATTRIBUTES가 자동 생성. 세션 테이블
 
