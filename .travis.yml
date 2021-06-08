@@ -17,7 +17,23 @@ before_install:
 
 script: "./gradlew clean build" # master 브랜치에 푸시되었을 때 수행하는 명령어
 
-# CI 실행 완료 시 메일 알람 (+ 슬랙알림도!)
+before_deploy: # deploy 명령어 실행전에 수행. CodeDeploy는 JAR파일을 인식하지 못해 JAR+기타설정파일을 압축
+  - zip -r aws-webservice * # 현재 위치의 모든 파일을 압축. 명령어의 마지막 위치는 본인의 프로젝트 명
+  - mkdir -p deploy # deploy 디렉토리를 Travis CI가 실행 중인 생성
+  - mv aws-webservice.zip deploy/aws-webservice.zip # 파일을 이동
+
+deploy: # S3로 파일 업로드 혹은 CodeDeploy로 배포 등 외부 서비스와 연동될 행위를 선언
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: spring-webservice-build # S3 버킷
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: private # 파일 접근 private로
+    local_dir: deploy # before_deploy에서 생성한 디렉토리. 해당 위치의 파일들만 S3로 전송
+    wait-until-deployed: true
+
+# CI 실행 완료 시 알람 (+ 슬랙알림도!)
 notifications:
   email:
     recipients:
